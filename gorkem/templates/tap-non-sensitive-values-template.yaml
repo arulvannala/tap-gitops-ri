@@ -89,6 +89,10 @@ tap_install:
           locations:
             - type: url
               target: https://github.com/MoSehsah/bank-demo/blob/main/catalog/catalog-info.yaml
+        backend:
+          reading:
+            allow:
+              - host: #@ data.values.git_repo
         auth:
           allowGuestAccess: true
           environment: development
@@ -116,7 +120,6 @@ tap_install:
         url: ""
     
     grype:
-      namespace: "my-apps"
       targetImagePullSecret: "scanner-secret-ref"
       #@ if data.values.airgapped:
       db:
@@ -134,7 +137,7 @@ tap_install:
     bitnami_services:
       mysql:
         helm_chart:
-          repo: #@ "oci://{}/bitnami/charts/mysql".format(data.values.image_registry)
+          repo: #@ "oci://{}/bitnami/charts".format(data.values.image_registry)
           version: 9.8.1
           chart_pull_secret_ref:
             name: chart-pull
@@ -144,7 +147,7 @@ tap_install:
             namespace: default
       postgresql:
         helm_chart:
-          repo: #@ "oci://{}/bitnami/charts/postgresql".format(data.values.image_registry)
+          repo: #@ "oci://{}/bitnami/charts".format(data.values.image_registry)
           version: 12.3.1
           chart_pull_secret_ref:
             name: chart-pull
@@ -154,7 +157,7 @@ tap_install:
             namespace: default
       rabbitmq:
         helm_chart:
-          repo: #@ "oci://{}/bitnami/charts/rabbitmq".format(data.values.image_registry)
+          repo: #@ "oci://{}/bitnami/charts".format(data.values.image_registry)
           version: 11.14.2
           chart_pull_secret_ref:
             name: chart-pull
@@ -164,7 +167,7 @@ tap_install:
             namespace: default
       redis:
         helm_chart:
-          repo: #@ "oci://{}/bitnami/charts/redis".format(data.values.image_registry)
+          repo: #@ "oci://{}/bitnami/charts".format(data.values.image_registry)
           version: 17.10.0
           chart_pull_secret_ref:
             name: chart-pull
